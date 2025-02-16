@@ -3,7 +3,7 @@
 # このDockerfileは本番向けに設計されていますが、開発環境用にボリュームマッピングを利用するので、
 # WORKDIRとコピー先のパスをホスト側のディレクトリ「/GasMileageLog」と一致させます。
 
-ARG RUBY_VERSION=3.1.6
+ARG RUBY_VERSION=3.4.2
 FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
 
 # Railsアプリケーションはここに置く
@@ -22,6 +22,14 @@ ENV RAILS_ENV="production" \
 
 FROM base AS build
 
+# Install packages needed to build gems (libyaml-dev を追加)
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y build-essential git libpq-dev pkg-config libyaml-dev && \
+    rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
+# Bundler のバージョンを合わせる
+RUN gem install bundler:2.6.3
+
 # gemのビルドに必要なパッケージのインストール
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential git libpq-dev pkg-config && \
@@ -29,9 +37,14 @@ RUN apt-get update -qq && \
 
 # アプリケーションのgemをインストール
 COPY Gemfile Gemfile.lock ./
-RUN bundle install && \
-    rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
-    bundle exec bootsnap precompile --gemfile
+# Install gems
+RUN bundle install
+
+# Remove caches
+RUN rm -rf ~/.bundle/ "${BUNDLE_PATH}/ruby"/*/cache "${BUNDLE_PATH}/ruby"/*/bundler/gems/*/.git
+
+# Precompile bootsnap
+RUN bundle exec bootsnap precompile --gemfile
 
 # アプリケーションコードのコピー
 COPY . .
@@ -42,21 +55,22 @@ RUN bundle exec bootsnap precompile app/ lib/
 # assetsのプリコンパイル（本番向け、シークレットが不要な場合）
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 
-# 最終ステージ
+# Final stage for app image
 FROM base
 
-# ビルドステージからアプリケーションとgemをコピーする
+# Copy built artifacts: gems, application
 COPY --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
 COPY --from=build /GasMileageLog /GasMileageLog
 
-# セキュリティ向上のため非rootユーザーを使用（/GasMileageLogの所有権を変更）
+# Run and own only the runtime files as a non-root user for security
 RUN groupadd --system --gid 1000 rails && \
     useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
-    chown -R rails:rails /GasMileageLog
+    chown -R rails:rails /GasMileageLog /usr/local/bundle
 USER 1000:1000
 
-# Entrypointはデータベースの準備などを行うスクリプトを指す（パスを合わせる）
+# Entrypoint prepares the database.
 ENTRYPOINT ["/GasMileageLog/bin/docker-entrypoint"]
 
+# Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
 CMD ["./bin/rails", "server"]
