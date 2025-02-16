@@ -19,7 +19,6 @@ services:
     stdin_open: true
     volumes:
       - .:/GasMileageLog
-      # - bundle_data:/usr/local/bundle:cached
       - node_modules:/app/node_modules:cached
       - /app/vendor
       - /app/tmp
@@ -40,7 +39,7 @@ services:
     image: seleniarm/standalone-chromium:latest
     shm_size: 512m
     ports:
-      - 4444:4444
+      - "4444:4444"
 
 volumes:
   pgdata:
