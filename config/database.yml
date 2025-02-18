@@ -81,6 +81,3 @@ test:
 production:
   <<: *default
   url: <%= ENV['DATABASE_URL'] %>
-  database: gas_mileage_log_production
-  username: gas_mileage_log
-  password: <%= ENV["GAS_MILEAGE_LOG_DATABASE_PASSWORD"] %>
