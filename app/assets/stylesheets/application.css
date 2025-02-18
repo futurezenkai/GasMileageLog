@@ -13,3 +13,146 @@
  *= require_tree .
  *= require_self
  */
+/* 全体の背景 */
+.home-container {
+    width: 1914px;
+    height: 1362px;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+  
+  /* ヘッダーのスタイル */
+  .header {
+    width: 100%;
+    height: 96px;
+    background: white;
+    border-bottom: 2px solid #D9D9D9;
+  }
+
+  /* ログアウトリンクのコンテナ */
+.logout-container {
+    position: absolute;
+    top: 10px;   /* 上からの余白（お好みで調整） */
+    right: 20px; /* 右からの余白（お好みで調整） */
+  }
+  
+  /* ログアウトリンク自体のスタイル（必要に応じて調整） */
+  .logout-link {
+    color: #1E1E1E;
+    font-size: 16px;
+    font-family: Inter, sans-serif;
+    text-decoration: none;
+    padding: 8px 12px;
+    background: #E3E3E3;
+    border-radius: 8px;
+    border: 1px solid #767676;
+  }
+  
+  /* メインコンテンツのスタイル */
+  .main-content {
+    width: 100%;
+    height: 452px;
+    padding: 160px 24px;
+    background: #F5F5F5;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 32px;
+  }
+  
+  /* ロゴ部分 */
+  .logo-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  /* タイトル */
+  .logo-title {
+    text-align: center;
+    color: #1E1E1E;
+    font-size: 72px;
+    font-family: Inter, sans-serif;
+    font-weight: 700;
+    line-height: 86.4px;
+    word-wrap: break-word;
+  }
+  
+  /* サブタイトル */
+  .logo-subtitle {
+    text-align: center;
+    color: #757575;
+    font-size: 32px;
+    font-family: Inter, sans-serif;
+    font-weight: 400;
+    line-height: 38.4px;
+    word-wrap: break-word;
+  }
+  
+
+
+ .auth-button {
+    flex: 1 1 0;
+    height: 32px;
+    padding: 8px;
+    border-radius: 8px;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    display: flex;
+    font-size: 16px;
+    font-family: Inter, sans-serif;
+    font-weight: 400;
+    line-height: 16px;
+    word-wrap: break-word;
+    text-decoration: none;
+  }
+  
+  .sign-in {
+    background: #E3E3E3;
+    border: 1px #767676 solid;
+    color: #1E1E1E;
+  }
+  
+  .register {
+    background: #2C2C2C;
+    border: 1px #2C2C2C solid;
+    color: #F5F5F5;
+  }
+  .auth-buttons-container {
+    width: 100%; /* 必要に応じて幅を調整 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+  }
+
+
+  /* 認証フォームを中央に配置するコンテナ */
+.auth-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;     /* 水平方向に中央配置 */
+    height: 100vh;           /* ビューポート全体の高さ */
+  }
+  
+  /* フォームの幅を指定したい場合 */
+  .auth-container form {
+    width: 300px;  /* 必要に応じて調整 */
+  }
+  
+  /* フォーム内の要素の余白等の調整 */
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .btn-primary {
+    width: 100%;
+  }

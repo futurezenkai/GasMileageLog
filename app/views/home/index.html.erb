@@ -1,25 +1,26 @@
-<div style="width: 1914px; height: 1362px; background: white; flex-direction: column; justify-content: flex-start; align-items: flex-start; display: inline-flex">
-  <div data-svg-wrapper>
-  <svg width="1914" height="96" viewBox="0 0 1914 96" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <mask id="path-1-inside-1_1_1064" fill="white">
-  <path d="M0 0H1914V96H0V0Z"/>
-  </mask>
-  <path d="M0 0H1914V96H0V0Z" fill="white"/>
-  <path d="M1914 95H0V97H1914V95Z" fill="#D9D9D9" mask="url(#path-1-inside-1_1_1064)"/>
-  </svg>
-  </div>
-  <div style="align-self: stretch; height: 452px; padding-left: 24px; padding-right: 24px; padding-top: 160px; padding-bottom: 160px; background: #F5F5F5; flex-direction: column; justify-content: flex-start; align-items: center; gap: 32px; display: flex">
-    <div style="flex-direction: column; justify-content: flex-start; align-items: center; gap: 8px; display: flex">
-      <div style="align-self: stretch; text-align: center; color: #1E1E1E; font-size: 72px; font-family: Inter; font-weight: 700; line-height: 86.40px; word-wrap: break-word">GasMileageLog</div>
-      <div style="align-self: stretch; text-align: center; color: #757575; font-size: 32px; font-family: Inter; font-weight: 400; line-height: 38.40px; word-wrap: break-word">燃費計算</div>
+<div class="home-container">
+  <div class="header">
+    <svg width="1914" height="96" viewBox="0 0 1914 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <mask id="path-1-inside-1_1_1064" fill="white">
+        <path d="M0 0H1914V96H0V0Z"/>
+      </mask>
+      <path d="M0 0H1914V96H0V0Z" fill="white"/>
+      <path d="M1914 95H0V97H1914V95Z" fill="#D9D9D9" mask="url(#path-1-inside-1_1_1064)"/>
+    </svg>
+    <!-- ログアウトリンクを右上に配置するためのコンテナ -->
+    <div class="logout-container">
+      <%= link_to "Logout", destroy_user_session_path, data: { turbo_method: :delete }, class: "logout-link" %>
     </div>
   </div>
-  <div style="width: 404px; height: 133px; justify-content: flex-start; align-items: center; gap: 12px; display: inline-flex">
-    <div style="flex: 1 1 0; height: 32px; padding: 8px; background: #E3E3E3; border-radius: 8px; overflow: hidden; border: 1px #767676 solid; justify-content: center; align-items: center; gap: 8px; display: flex">
-      <div style="color: #1E1E1E; font-size: 16px; font-family: Inter; font-weight: 400; line-height: 16px; word-wrap: break-word">Sign in</div>
+  <div class="main-content">
+    <div class="logo-container">
+      <div class="logo-title">GasMileageLog</div>
+      <div class="logo-subtitle">燃費計算</div>
     </div>
-    <div style="flex: 1 1 0; height: 32px; padding: 8px; background: #2C2C2C; border-radius: 8px; overflow: hidden; border: 1px #2C2C2C solid; justify-content: center; align-items: center; gap: 8px; display: flex">
-      <div style="color: #F5F5F5; font-size: 16px; font-family: Inter; font-weight: 400; line-height: 16px; word-wrap: break-word">Register</div>
-    </div>
+  </div>
+  <div class="auth-buttons-container" style="height: 133px;">
+    <%= link_to "Sign in", new_user_session_path, class: "auth-button sign-in" %>
+    <%= link_to "Register", new_user_registration_path, class: "auth-button register" %>
   </div>
 </div>
+
