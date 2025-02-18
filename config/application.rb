@@ -23,5 +23,9 @@ module GasMileageLog
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    # アプリケーションのタイムゾーンを日本時間に設定
+    config.time_zone = "Tokyo"
+    # ActiveRecord のタイムスタンプもローカル（日本時間）にする
+    config.active_record.default_timezone = :local
   end
 end
