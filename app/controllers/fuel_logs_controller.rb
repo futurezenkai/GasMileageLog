@@ -1,5 +1,4 @@
 class FuelLogsController < ApplicationController
-  belongs_to :car
   def create
     @car = Car.find(params[:car_id])
     @fuel_log = @car.fuel_logs.build(fuel_log_params)

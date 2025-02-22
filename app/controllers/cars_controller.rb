@@ -19,7 +19,7 @@ class CarsController < ApplicationController
 
   def new
     @car = Car.new
-    @car.fuel_logs.build # fuel_log のネスト属性用の空のインスタンスを作成
+    @car.fuel_logs.build
   end
 
   def create
@@ -55,6 +55,6 @@ class CarsController < ApplicationController
   private
 
   def car_params
-    params.require(:car).permit(:name, :model, fuel_log_attributes: [:odometer])
+    params.require(:car).permit(:name, :model, fuel_logs_attributes: [:fuel_date, :odometer, :fuel_amount])
   end
 end
