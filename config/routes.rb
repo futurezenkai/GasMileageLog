@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :cars
+  resources :cars do
+    resources :fuel_logs, only: [:create]
+  end
   devise_for :users, controllers: {registrations: "users/registrations"}
 
   get "home/index"
