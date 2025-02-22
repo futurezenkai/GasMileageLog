@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GasMileageLog</title>
+    <!-- Tailwind CSS の読み込み（CDNやビルド済みのファイルを指定） -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <!-- ヘッダー -->
+    <header class="bg-white shadow p-4 flex justify-between items-center">
+      <!-- 左側：ロゴ（クリックで車一覧へ遷移 → ログイン時のみ有効） -->
+      <a href="/cars" class="cursor-pointer">
+        <div class="text-center text-[#6200ee] text-[32px] font-bold font-['Inter'] capitalize leading-[38.40px]">
+          GasMileageLog
+        </div>
+      </a>
+      <!-- 右側：LOGOUTボタン（ログイン時のみ表示） -->
+      <div>
+        <%= link_to "LOGOUT", destroy_user_session_path, data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to log out?" }, class: "text-[#6200ee] text-sm font-medium uppercase tracking-wider border border-gray-300 px-4 py-2 rounded hover:bg-gray-100" %>
+      </div>
+    </header>
+
+    <!-- タブ部分：車の一覧 -->
+    <div class="mt-6 max-w-4xl mx-auto px-4">
+      <div class="flex space-x-4 border-b pb-2">
+        <% @cars.each do |car| %>
+          <% active = (@selected_car == car) ? "bg-white text-[#007AFF] shadow-md" : "bg-gray-200 text-gray-700" %>
+          <%= link_to car.name, cars_path(selected_car: car.id), class: "px-4 py-2 rounded-t #{active}" %>
+        <% end %>
+        <!-- '+'タブ：新規車登録画面へのリンク -->
+        <%= link_to "+", new_car_path, class: "px-4 py-2 bg-gray-200 text-gray-700 rounded-t" %>
+      </div>
+    </div>
+  
+    <!-- 給油記録のテーブル -->
+    <div class="mt-6 max-w-4xl mx-auto px-4">
+      <div class="bg-white shadow rounded">
+        <!-- テーブルヘッダー -->
+        <div class="grid grid-cols-4 bg-[#1A69C6] text-white font-bold p-3">
+          <div>Date</div>
+          <div>ODO(Km)</div>
+          <div>Refueling amount(l)</div>
+          <div>Fuel efficiency(Km/l)</div>
+        </div>
+        <!-- 各行のデータ -->
+        <% @fuel_logs.each_with_index do |log, i| %>
+          <div class="grid grid-cols-4 border-t p-3">
+            <!-- Dateカラム：1行目は "-"、それ以外は通常の値 -->
+            <div><%= i.zero? ? "-" : log.fuel_date %></div>
+            <!-- ODOカラム：通常は値を表示 -->
+            <div><%= log.odometer %></div>
+            <!-- Refueling amountカラム：1行目は "-"、それ以外は通常の値 -->
+            <div><%= i.zero? ? "-" : log.fuel_amount %></div>
+            <!-- Fuel efficiencyカラム：1行目は "-"、以降は計算結果 -->
+            <div>
+              <% if i > 0 %>
+                <% previous = @fuel_logs[i-1].odometer %>
+                <%= log.fuel_efficiency(previous) || "-" %>
+              <% else %>
+                -
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+        <!-- 最下部の入力行 -->
+        <div class="grid grid-cols-4 border-t p-3">
+          <!-- FuelLog用の新規作成フォーム -->
+          <%= form_with(model: [@selected_car, FuelLog.new], local: true) do |f| %>
+            <div class="col-span-1">
+              <%= f.date_field :fuel_date, class: "w-full border rounded px-2 py-1" %>
+            </div>
+            <div class="col-span-1">
+              <%= f.number_field :odometer, placeholder: "(Km)", class: "w-full border rounded px-2 py-1" %>
+            </div>
+            <div class="col-span-1">
+              <%= f.number_field :fuel_amount, step: 0.01, placeholder: "(L)", class: "w-full border rounded px-2 py-1" %>
+            </div>
+            <div class="col-span-1 flex items-center">
+              <%= f.submit "Add", class: "w-full bg-[#6200ee] text-white text-sm font-medium uppercase tracking-wider px-4 py-2 rounded hover:bg-[#4d00b8]" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    
+
+    <!-- フッター -->
+    <footer class="bg-white shadow p-4 text-center text-gray-500">
+      <!-- フッター内容は任意 -->
+      &copy; 2025 GasMileageLog
+    </footer>
+  </body>
+</html>

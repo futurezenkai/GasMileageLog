@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
   <head>
-    <title><%= content_for(:title) || "Gas Mileage Log" %></title>
+    <meta charset="UTF-8" />
+    <title><%= content_for(:title) || "GasMileageLog" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
@@ -16,6 +17,8 @@
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <!-- Tailwind CSS の読み込み（Turbo の遷移時にも再読み込みさせる） -->
+    <script src="https://cdn.tailwindcss.com" data-turbo-track="reload"></script>
   </head>
 
   <body>
