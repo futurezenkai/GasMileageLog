@@ -70,6 +70,9 @@ RUN groupadd --system --gid 1000 rails && \
     chown -R rails:rails /GasMileageLog /usr/local/bundle
 USER 1000:1000
 
+# Railsコマンドをコンテナ内で直接「rails」と入力して使えるようにする
+ENV PATH="/GasMileageLog/bin:${PATH}"
+
 # Entrypoint でデータベース準備などを実施
 ENTRYPOINT ["/GasMileageLog/bin/docker-entrypoint"]
 
