@@ -22,4 +22,9 @@ class FuelLog < ApplicationRecord
     distance = odometer - previous_odometer
     (distance.to_f / fuel_amount).round(1)
   end
+
+  def previous_odometer
+    previous_log = car.fuel_logs.where("created_at < ?", created_at).order(created_at: :desc).first
+    previous_log&.odometer
+  end
 end

@@ -31,6 +31,7 @@ services:
       - chrome
     environment:
       RAILS_ENV: development
+      BUNDLE_WITHOUT: test
       DATABASE_URL: postgres://postgres:password@db:5432/gas_mileage_log_development
       TZ: Asia/Tokyo
       SELENIUM_DRIVER_URL: http://chrome:4444/wd/hub
