@@ -16,11 +16,13 @@ RUN apt-get update -qq && \
         build-essential && \
     rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 
-# production向け環境変数設定（docker-compose.yml で上書き可能）
-ENV RAILS_ENV="production" \
+# build時の環境変数を引数にする（デフォルトは production だが、docker-compose で上書き可）
+ARG RAILS_ENV=production
+ARG BUNDLE_WITHOUT="development"
+ENV RAILS_ENV=${RAILS_ENV} \
     BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development"
+    BUNDLE_WITHOUT=${BUNDLE_WITHOUT}
 
 # ===================== build ステージ =====================
 FROM base AS build
