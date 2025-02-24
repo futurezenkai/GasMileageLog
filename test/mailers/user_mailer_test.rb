@@ -15,6 +15,6 @@ class UserMailerTest < ActionMailer::TestCase
     mail = UserMailer.fuel_log_notification(user, fuel_log)
 
     assert_equal "今回の燃費情報（#{fuel_log.car.name}）", mail.subject
-    assert_equal [user.email], mail.to
+    assert_equal [ user.email ], mail.to
   end
 end
