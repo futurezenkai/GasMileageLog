@@ -3,7 +3,7 @@ class FuelLogsController < ApplicationController
     @car = Car.find(params[:car_id])
     @fuel_log = @car.fuel_logs.build(fuel_log_params)
     if @fuel_log.save
-      UserMailer.fuel_log_notification(current_user, @fuel_log).deliver_now
+      UserMailer.fuel_log_notification(current_user, @fuel_log).deliver_later
       redirect_to cars_path(selected_car: @car.id), notice: "Fuel log added."
     else
       redirect_to cars_path(selected_car: @car.id), alert: "Failed to add fuel log."

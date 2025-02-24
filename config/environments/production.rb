@@ -84,15 +84,14 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: "smtp.sendgrid.net",
+    address: "email-smtp.ap-northeast-1.amazonaws.com",  # Amazon SES の SMTP エンドポイント
     port: 587,
-    domain: "yourdomain.com",  # 適宜あなたのドメインに変更
-    user_name: "apikey",       # SendGridではユーザ名の代わりに "apikey" を使います
-    password: ENV["SENDGRID_API_KEY"],  # APIキーは環境変数で管理
-    authentication: :plain,
+    user_name: ENV["SES_SMTP_USER"], # heroku config:set SES_SMTP_USER=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    password: ENV["SES_SMTP_PASSWORD"], # heroku config:set SES_SMTP_PASSWORD=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    authentication: :login,
     enable_starttls_auto: true
-}
-config.action_mailer.default_url_options = { host: 'yourdomain.com' }
+  }
+config.action_mailer.default_url_options = { host: "futurezenkai.jp" }
 
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to

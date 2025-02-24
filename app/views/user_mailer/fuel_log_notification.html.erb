@@ -1,5 +1,6 @@
-<p>今回のCar1の燃費は<%= @fuel_efficiency %>キロメートル/リットルでした</p>
-<p>日付: <%= @fuel_log.fuel_date.strftime("%Y/%m/%d") %></p>
-<p>オドメーターの値: <%= @fuel_log.odometer %></p>
-<p>今回の給油量: <%= @fuel_log.fuel_amount %>l</p>
+<p>今回の<%= @fuel_log.car.name %>の燃費は<%= @fuel_efficiency %>Km/Lでした</p>
+<p>給油日: <%= @fuel_log.fuel_date.strftime("%Y/%m/%d") %></p>
+<p>今回のオドメーターの値: <%= @fuel_log.odometer %>Km</p>
+<p>前回のオドメーターの値: <%= @fuel_log.previous_record&.odometer %>Km</p>
+<p>今回の給油量: <%= @fuel_log.fuel_amount %>L</p>
 <p>安全運転お疲れ様です！</p>

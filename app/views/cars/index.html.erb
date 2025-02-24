@@ -72,10 +72,10 @@
               <%= f.date_field :fuel_date, class: "w-full border rounded px-2 py-1" %>
             </div>
             <div class="col-span-1">
-              <%= f.number_field :odometer, placeholder: "(Km)", class: "w-full border rounded px-2 py-1" %>
+              <%= f.number_field :odometer, placeholder: "ODOmeter (Km)", class: "w-full border rounded px-2 py-1" %>
             </div>
             <div class="col-span-1">
-              <%= f.number_field :fuel_amount, step: 0.01, placeholder: "(L)", class: "w-full border rounded px-2 py-1" %>
+              <%= f.number_field :fuel_amount, step: 0.01, placeholder: "Refueling amount(L)", class: "w-full border rounded px-2 py-1" %>
             </div>
             <div class="col-span-1 flex items-center">
               <%= f.submit "Add", class: "w-full bg-[#6200ee] text-white text-sm font-medium uppercase tracking-wider px-4 py-2 rounded hover:bg-[#4d00b8]" %>
