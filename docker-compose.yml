@@ -13,7 +13,12 @@ services:
       - pgdata:/var/lib/postgresql/data
 
   web:
-    build: .
+    build:
+      context: .
+      args:
+        RAILS_ENV: development
+        LAUNCHY_BROWSER: echo
+        BUNDLE_WITHOUT: test
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     tty: true
     stdin_open: true
@@ -34,7 +39,6 @@ services:
       DATABASE_URL: postgres://postgres:password@db:5432/gas_mileage_log_development
       TZ: Asia/Tokyo
       SELENIUM_DRIVER_URL: http://chrome:4444/wd/hub
-
   chrome:
     image: seleniarm/standalone-chromium:latest
     shm_size: 512m
