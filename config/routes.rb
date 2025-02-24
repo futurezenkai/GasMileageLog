@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :cars do
-    resources :fuel_logs, only: [ :create ]
+    resources :fuel_logs, only: [ :create, :destroy ]
   end
   devise_for :users, controllers: { registrations: "users/registrations" }
 

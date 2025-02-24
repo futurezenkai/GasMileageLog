@@ -35,31 +35,34 @@
     </div>
   
     <!-- 給油記録のテーブル -->
-    <div class="mt-6 max-w-4xl mx-auto px-4">
+    <div class="mt-6 max-w-4.5xl mx-auto px-4">
       <div class="bg-white shadow rounded">
         <!-- テーブルヘッダー -->
-        <div class="grid grid-cols-4 bg-[#1A69C6] text-white font-bold p-3">
+        <div class="grid grid-cols-5 gap-2 bg-[#1A69C6] text-white font-bold p-3">
           <div>Date</div>
           <div>ODO(Km)</div>
-          <div>Refueling amount(l)</div>
-          <div>Fuel efficiency(Km/l)</div>
+          <div>Refueling amount(L)</div>
+          <div class="whitespace-nowrap">Fuel efficiency(Km/L)</div>
+          <div>deletion</div> <!-- 削除ボタン用の空ヘッダー -->
         </div>
         <!-- 各行のデータ -->
         <% @fuel_logs.each_with_index do |log, i| %>
-          <div class="grid grid-cols-4 border-t p-3">
-            <!-- Dateカラム：1行目は "-"、それ以外は通常の値 -->
+          <div class="grid grid-cols-5 border-t p-3">
             <div><%= i.zero? ? "-" : log.fuel_date %></div>
-            <!-- ODOカラム：通常は値を表示 -->
             <div><%= log.odometer %></div>
-            <!-- Refueling amountカラム：1行目は "-"、それ以外は通常の値 -->
             <div><%= i.zero? ? "-" : log.fuel_amount %></div>
-            <!-- Fuel efficiencyカラム：1行目は "-"、以降は計算結果 -->
             <div>
               <% if i > 0 %>
                 <% previous = @fuel_logs[i-1].odometer %>
                 <%= log.fuel_efficiency(previous) || "-" %>
               <% else %>
                 -
+              <% end %>
+            </div>
+            <!-- 削除ボタン：1時間以内なら表示 -->
+            <div>
+              <% if !i.zero? && log.created_at > 1.hour.ago %>
+                <%= link_to "delete", car_fuel_log_path(log.car, log), data: { turbo_method: :delete, turbo_confirm: "削除してよろしいですか？" }, class: "text-red-500 hover:underline font-bold border border-red-500 px-2 py-1" %>
               <% end %>
             </div>
           </div>

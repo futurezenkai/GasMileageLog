@@ -10,6 +10,17 @@ class FuelLogsController < ApplicationController
     end
   end
 
+  def destroy
+    @fuel_log = FuelLog.find(params[:id])
+    if @fuel_log.created_at > 1.hour.ago
+      @fuel_log.destroy
+      flash[:notice] = "レコードを削除しました"
+    else
+      flash[:alert] = "削除できる時間が経過しています"
+    end
+    redirect_to cars_path(selected_car: params[:car_id])
+  end
+
   private
 
   def fuel_log_params
