@@ -9,4 +9,3 @@ class UserMailer < ApplicationMailer
     mail to: @user.email, subject: "今回の燃費情報（#{@fuel_log.car.name}）"
   end
 end
-
